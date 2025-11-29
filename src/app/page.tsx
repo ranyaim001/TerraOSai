@@ -1,66 +1,97 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+'use client';
+
+import { useState } from 'react';
+import Navigation from '@/components/Navigation';
+import PlanetaryHUD from '@/components/PlanetaryHUD';
+import MyDividend from '@/components/MyDividend';
+import TheSimulation from '@/components/TheSimulation';
+import BioTwin from '@/components/BioTwin';
+import styles from './page.module.css';
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'planetary-hud':
+        return <PlanetaryHUD />;
+      case 'my-dividend':
+        return <MyDividend />;
+      case 'the-simulation':
+        return <TheSimulation />;
+      case 'bio-twin':
+        return <BioTwin />;
+      default:
+        return (
+          <>
+            <div className={styles.hero}>
+              <h1 className={styles.title}>
+                Welcome to <span className={styles.gradient}>TerraOS</span>
+              </h1>
+              <p className={styles.subtitle}>
+                Visualizing unseen connections. Gamifying global cooperation.
+              </p>
+            </div>
+
+            <div className={styles.grid}>
+              <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('planetary-hud')}>
+                <div className={styles.cardIcon}>🌍</div>
+                <h3 className={styles.cardTitle}>Planetary HUD</h3>
+                <p className={styles.cardDescription}>
+                  Real-time global health monitoring and visualization of planetary metrics.
+                </p>
+              </div>
+
+              <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('my-dividend')}>
+                <div className={styles.cardIcon}>💰</div>
+                <h3 className={styles.cardTitle}>My Dividend</h3>
+                <p className={styles.cardDescription}>
+                  Track your economic participation and universal basic income distribution.
+                </p>
+              </div>
+
+              <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('the-simulation')}>
+                <div className={styles.cardIcon}>🎮</div>
+                <h3 className={styles.cardTitle}>The Simulation</h3>
+                <p className={styles.cardDescription}>
+                  Gamified governance platform for collaborative decision-making and peace solutions.
+                </p>
+              </div>
+
+              <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('bio-twin')}>
+                <div className={styles.cardIcon}>🧬</div>
+                <h3 className={styles.cardTitle}>Bio-Twin</h3>
+                <p className={styles.cardDescription}>
+                  Your digital health twin for personalized wellness tracking and insights.
+                </p>
+              </div>
+            </div>
+
+            <div className={styles.stats}>
+              <div className={`${styles.stat} glass-panel`}>
+                <div className={styles.statValue}>8.1B</div>
+                <div className={styles.statLabel}>Global Citizens</div>
+              </div>
+              <div className={`${styles.stat} glass-panel`}>
+                <div className={styles.statValue}>195</div>
+                <div className={styles.statLabel}>Countries Connected</div>
+              </div>
+              <div className={`${styles.stat} glass-panel`}>
+                <div className={styles.statValue}>99.8%</div>
+                <div className={styles.statLabel}>System Uptime</div>
+              </div>
+            </div>
+          </>
+        );
+    }
+  };
+
   return (
-    <div className={styles.page}>
+    <>
+      <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
       <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        {renderContent()}
       </main>
-    </div>
+    </>
   );
 }
