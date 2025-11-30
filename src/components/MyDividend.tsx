@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import AITradingDashboard from './AITradingDashboard';
 import styles from './MyDividend.module.css';
+import RSSFeed from './RSSFeed';
 
 export default function MyDividend() {
     const [activeTab, setActiveTab] = useState('dividend');
@@ -123,6 +124,8 @@ export default function MyDividend() {
                             </div>
                         </div>
                     </div>
+
+                    <RSSFeed feedType="finance" title="Market News & Financial Insights" />
                 </>
             )}
         </div>

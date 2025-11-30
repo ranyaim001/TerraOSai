@@ -36,9 +36,9 @@ body {
   overflow-x: hidden;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at top, rgba(0, 240, 255, 0.15), transparent 50%),
-    radial-gradient(ellipse at bottom, rgba(112, 0, 255, 0.15), transparent 50%),
-    var(--background);
+    linear-gradient(rgba(5, 5, 5, 0.7), rgba(5, 5, 5, 0.8)),
+    url('/rainforest-bg.jpg') no-repeat center center fixed;
+  background-size: cover;
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;

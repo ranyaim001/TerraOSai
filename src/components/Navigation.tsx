@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import TerraOSLogo from './TerraOSLogo';
 import styles from './Navigation.module.css';
 
 const navItems = [
@@ -9,6 +10,7 @@ const navItems = [
     { id: 'my-dividend', label: 'My Dividend', icon: '💰' },
     { id: 'the-simulation', label: 'The Simulation', icon: '🎮' },
     { id: 'bio-twin', label: 'Bio-Twin', icon: '🧬' },
+    { id: 'knowledge-hub', label: 'Knowledge Hub', icon: '📚' },
 ];
 
 interface NavigationProps {
@@ -28,8 +30,11 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
     return (
         <nav className={styles.navigation}>
             <div className={styles.logo}>
-                <span className={styles.logoText}>TerraOS</span>
-                <span className={styles.logoVersion}>v1.0</span>
+                <TerraOSLogo width={40} height={40} />
+                <div className={styles.logoTextContainer}>
+                    <span className={styles.logoText}>TerraOS</span>
+                    <span className={styles.logoVersion}>v1.0</span>
+                </div>
             </div>
 
             <ul className={styles.navList}>

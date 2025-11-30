@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './TheSimulation.module.css';
+import RSSFeed from './RSSFeed';
 
 interface ProposalProps {
     id: number;
@@ -11,7 +11,7 @@ interface ProposalProps {
     status: 'active' | 'passed' | 'failed';
 }
 
-function ProposalCard({ id, title, description, votes, status }: ProposalProps) {
+function ProposalCard({ title, description, votes, status }: ProposalProps) {
     const totalVotes = votes.for + votes.against;
     const forPercentage = totalVotes > 0 ? (votes.for / totalVotes) * 100 : 0;
 
@@ -166,6 +166,8 @@ export default function TheSimulation() {
                     </div>
                 </div>
             </div>
+
+            <RSSFeed feedType="simulation" title="Global Governance & Peace News" />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import styles from './PlanetaryHUD.module.css';
+import RSSFeed from './RSSFeed';
 
 interface MetricCardProps {
     title: string;
@@ -157,6 +157,8 @@ export default function PlanetaryHUD() {
                     </div>
                 </div>
             </div>
+
+            <RSSFeed feedType="planetary" title="Latest Environmental & Climate News" />
         </div>
     );
 }

@@ -1,11 +1,38 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './AITradingDashboard.module.css';
+
+interface DailyPick {
+    symbol: string;
+    name: string;
+    currentPrice: number;
+    predictedGrowth: string;
+    reasoning: string;
+    riskLevel: 'Low' | 'Moderate' | 'High';
+    sector: string;
+}
 
 export default function AITradingDashboard() {
     const [investmentAmount, setInvestmentAmount] = useState('1000');
     const [riskLevel, setRiskLevel] = useState('conservative');
+    const [dailyPicks, setDailyPicks] = useState<DailyPick[]>([]);
+
+    useEffect(() => {
+        const fetchPicks = async () => {
+            try {
+                const response = await fetch('/api/stocks');
+                const data = await response.json();
+                if (data.dailyPicks) {
+                    setDailyPicks(data.dailyPicks);
+                }
+            } catch (error) {
+                console.error('Failed to fetch daily picks:', error);
+            }
+        };
+
+        fetchPicks();
+    }, []);
 
     return (
         <div className={styles.container}>
@@ -72,6 +99,36 @@ export default function AITradingDashboard() {
                             <div className={styles.metricLabel}>Win Rate</div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div className={`${styles.dailyPicksSection} glass-panel`}>
+                <h3 className={styles.sectionTitle}>🤖 AI Daily Research & Picks</h3>
+                <div className={styles.dailyPicksGrid}>
+                    {dailyPicks.map((pick, index) => (
+                        <div key={index} className={styles.dailyPickCard}>
+                            <div className={styles.pickHeader}>
+                                <div className={styles.pickIdentity}>
+                                    <span className={styles.pickSymbol}>{pick.symbol}</span>
+                                    <span className={styles.pickName}>{pick.name}</span>
+                                </div>
+                                <div className={styles.pickGrowth}>{pick.predictedGrowth}</div>
+                            </div>
+
+                            <div className={styles.pickPrice}>${pick.currentPrice.toFixed(2)}</div>
+
+                            <div className={styles.pickReasoning}>
+                                &quot;{pick.reasoning}&quot;
+                            </div>
+
+                            <div className={styles.pickFooter}>
+                                <span className={styles.pickSector}>{pick.sector}</span>
+                                <span className={`${styles.pickRisk} ${styles['risk' + pick.riskLevel]}`}>
+                                    {pick.riskLevel} Risk
+                                </span>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 

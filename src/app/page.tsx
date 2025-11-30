@@ -7,6 +7,7 @@ import MyDividend from '@/components/MyDividend';
 import TheSimulation from '@/components/TheSimulation';
 import BioTwin from '@/components/BioTwin';
 import AIChat from '@/components/AIChat';
+import KnowledgeHub from '@/components/KnowledgeHub';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -22,6 +23,8 @@ export default function Home() {
         return <TheSimulation />;
       case 'bio-twin':
         return <BioTwin />;
+      case 'knowledge-hub':
+        return <KnowledgeHub />;
       default:
         return (
           <>
@@ -66,6 +69,14 @@ export default function Home() {
                 <h3 className={styles.cardTitle}>Bio-Twin</h3>
                 <p className={styles.cardDescription}>
                   Your digital health twin for personalized wellness tracking and insights.
+                </p>
+              </div>
+
+              <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('knowledge-hub')}>
+                <div className={styles.cardIcon}>📚</div>
+                <h3 className={styles.cardTitle}>Knowledge Hub</h3>
+                <p className={styles.cardDescription}>
+                  Curated resources for health, finance, and holistic wellness wisdom.
                 </p>
               </div>
             </div>

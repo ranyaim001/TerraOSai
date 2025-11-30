@@ -344,3 +344,116 @@
         grid-template-columns: 1fr;
     }
 }
+
+.dailyPicksSection {
+    margin-bottom: 2rem;
+}
+
+.dailyPicksGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.dailyPickCard {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.dailyPickCard:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: var(--primary);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.pickHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.pickIdentity {
+    display: flex;
+    flex-direction: column;
+}
+
+.pickSymbol {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.pickName {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.pickGrowth {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--success);
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 255, 157, 0.1);
+    border-radius: 20px;
+}
+
+.pickPrice {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--foreground);
+}
+
+.pickReasoning {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    border-left: 3px solid var(--primary);
+}
+
+.pickFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.pickSector {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.pickRisk {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.riskLow {
+    color: var(--success);
+    background: rgba(0, 255, 157, 0.1);
+}
+
+.riskModerate {
+    color: var(--warning);
+    background: rgba(255, 184, 0, 0.1);
+}
+
+.riskHigh {
+    color: var(--error);
+    background: rgba(255, 51, 51, 0.1);
+}

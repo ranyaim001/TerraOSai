@@ -168,8 +168,10 @@
 /* Responsive */
 @media (max-width: 768px) {
   .main {
-    margin-left: 80px;
+    margin-left: 0;
     padding: 2rem 1.5rem;
+    padding-bottom: 100px;
+    /* Space for bottom nav */
   }
 
   .title {
@@ -197,8 +199,9 @@
 
 @media (max-width: 480px) {
   .main {
-    margin-left: 0;
     padding: 1.5rem 1rem;
+    padding-bottom: 100px;
+    /* Space for bottom nav */
   }
 
   .title {

@@ -1,8 +1,59 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import styles from './BioTwin.module.css';
+import RSSFeed from './RSSFeed';
+import WorkoutPlayer from './WorkoutPlayer';
+
+interface Workout {
+    id: number;
+    title: string;
+    channel: string;
+    videoId: string;
+    duration: string;
+    category: string;
+    difficulty: string;
+    description: string;
+    caloriesBurn: number;
+}
+
+interface WorkoutData {
+    categories: string[];
+    dailyPick: Workout;
+    featured: Workout[];
+    userStats: {
+        streak: number;
+        totalWorkouts: number;
+        totalCaloriesBurned: number;
+        favoriteCategory: string;
+        averagePerWeek: number;
+    };
+}
 
 export default function BioTwin() {
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [workoutData, setWorkoutData] = useState<WorkoutData | null>(null);
+    const [currentWorkout, setCurrentWorkout] = useState<Workout | null>(null);
+
+    useEffect(() => {
+        const fetchWorkouts = async () => {
+            try {
+                const response = await fetch('/api/workouts');
+                const data = await response.json();
+                setWorkoutData(data);
+                setCurrentWorkout(data.dailyPick);
+            } catch (error) {
+                console.error('Failed to fetch workouts:', error);
+            }
+        };
+
+        fetchWorkouts();
+    }, []);
+
+    const filteredWorkouts = workoutData?.featured.filter(
+        (workout) => selectedCategory === 'All' || workout.category === selectedCategory
+    ) || [];
+
     return (
         <div className={styles.container}>
             <header className={styles.header}>
@@ -92,6 +143,105 @@ export default function BioTwin() {
                 </div>
             </div>
 
+            {/* 5-Minute Workout Section */}
+            <div className={`${styles.workoutSection} glass-panel`}>
+                <div className={styles.workoutHeader}>
+                    <h2 className={styles.sectionTitle}>🏋️ 5-Minute Daily Workout</h2>
+                    {workoutData && (
+                        <div className={styles.workoutStats}>
+                            <div className={styles.stat}>
+                                <span className={styles.statIcon}>🔥</span>
+                                <div>
+                                    <div className={styles.statValue}>{workoutData.userStats.streak}</div>
+                                    <div className={styles.statLabel}>Day Streak</div>
+                                </div>
+                            </div>
+                            <div className={styles.stat}>
+                                <span className={styles.statIcon}>💪</span>
+                                <div>
+                                    <div className={styles.statValue}>{workoutData.userStats.totalWorkouts}</div>
+                                    <div className={styles.statLabel}>Total Workouts</div>
+                                </div>
+                            </div>
+                            <div className={styles.stat}>
+                                <span className={styles.statIcon}>⚡</span>
+                                <div>
+                                    <div className={styles.statValue}>{workoutData.userStats.totalCaloriesBurned}</div>
+                                    <div className={styles.statLabel}>Calories Burned</div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className={styles.categorySelector}>
+                    <button
+                        className={`${styles.categoryButton} ${selectedCategory === 'All' ? styles.active : ''}`}
+                        onClick={() => setSelectedCategory('All')}
+                    >
+                        All
+                    </button>
+                    {workoutData?.categories.map((category) => (
+                        <button
+                            key={category}
+                            className={`${styles.categoryButton} ${selectedCategory === category ? styles.active : ''}`}
+                            onClick={() => setSelectedCategory(category)}
+                        >
+                            {category}
+                        </button>
+                    ))}
+                </div>
+
+                {currentWorkout && (
+                    <div className={styles.dailyWorkout}>
+                        <div className={styles.dailyWorkoutBadge}>⭐ Today&apos;s Pick</div>
+                        <WorkoutPlayer
+                            videoId={currentWorkout.videoId}
+                            title={currentWorkout.title}
+                            channel={currentWorkout.channel}
+                            duration={currentWorkout.duration}
+                            difficulty={currentWorkout.difficulty}
+                            caloriesBurn={currentWorkout.caloriesBurn}
+                            description={currentWorkout.description}
+                        />
+                    </div>
+                )}
+
+                {filteredWorkouts.length > 0 && (
+                    <div className={styles.moreWorkouts}>
+                        <h3 className={styles.subsectionTitle}>More Workouts</h3>
+                        <div className={styles.workoutGrid}>
+                            {filteredWorkouts.slice(0, 3).map((workout) => (
+                                <div
+                                    key={workout.id}
+                                    className={styles.workoutCard}
+                                    onClick={() => setCurrentWorkout(workout)}
+                                >
+                                    <div className={styles.workoutCardThumb}>
+                                        <img
+                                            src={`https://img.youtube.com/vi/${workout.videoId}/mqdefault.jpg`}
+                                            alt={workout.title}
+                                            className={styles.workoutCardImage}
+                                        />
+                                        <div className={styles.workoutCardDuration}>{workout.duration}</div>
+                                    </div>
+                                    <div className={styles.workoutCardInfo}>
+                                        <h4 className={styles.workoutCardTitle}>{workout.title}</h4>
+                                        <p className={styles.workoutCardChannel}>{workout.channel}</p>
+                                        <div className={styles.workoutCardMeta}>
+                                            <span className={`${styles.workoutCardDifficulty} ${styles[workout.difficulty.toLowerCase()]}`}>
+                                                {workout.difficulty}
+                                            </span>
+                                            <span className={styles.workoutCardCalories}>🔥 {workout.caloriesBurn} cal</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+            </div>
+
             <div className={styles.contentGrid}>
                 <div className={`${styles.insights} glass-panel`}>
                     <h3 className={styles.sectionTitle}>AI Insights & Recommendations</h3>
@@ -101,7 +251,7 @@ export default function BioTwin() {
                             <div className={styles.insightContent}>
                                 <div className={styles.insightTitle}>Hydration Reminder</div>
                                 <div className={styles.insightText}>
-                                    You're 20% below your daily water intake goal. Consider drinking 2 more glasses today.
+                                    You&apos;re 20% below your daily water intake goal. Consider drinking 2 more glasses today.
                                 </div>
                             </div>
                         </div>
@@ -121,7 +271,7 @@ export default function BioTwin() {
                             <div className={styles.insightContent}>
                                 <div className={styles.insightTitle}>Activity Alert</div>
                                 <div className={styles.insightText}>
-                                    You've been sedentary for 3 hours. A 5-minute walk would boost your energy levels.
+                                    You&apos;ve been sedentary for 3 hours. A 5-minute walk would boost your energy levels.
                                 </div>
                             </div>
                         </div>
@@ -155,6 +305,9 @@ export default function BioTwin() {
                     </div>
                 </div>
             </div>
-        </div>
+
+            <RSSFeed feedType="health" title="Health & Wellness News" />
+            <RSSFeed feedType="fitness" title="Fitness & Workout Tips" />
+        </div >
     );
 }
