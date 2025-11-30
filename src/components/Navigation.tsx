@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import styles from './Navigation.module.css';
 
 const navItems = [
@@ -16,6 +17,14 @@ interface NavigationProps {
 }
 
 export default function Navigation({ activeTab, onTabChange }: NavigationProps) {
+    const [language, setLanguage] = useState('en');
+    const [showFeedback, setShowFeedback] = useState(false);
+
+    const handleFeedback = () => {
+        setShowFeedback(true);
+        setTimeout(() => setShowFeedback(false), 2000);
+    };
+
     return (
         <nav className={styles.navigation}>
             <div className={styles.logo}>
@@ -38,6 +47,34 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
             </ul>
 
             <div className={styles.footer}>
+                <div className={styles.languageSelector}>
+                    <label className={styles.languageLabel}>🌐</label>
+                    <select
+                        className={styles.languageDropdown}
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                    >
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                        <option value="fr">Français</option>
+                        <option value="de">Deutsch</option>
+                        <option value="zh">中文</option>
+                        <option value="ja">日本語</option>
+                        <option value="ar">العربية</option>
+                        <option value="hi">हिन्दी</option>
+                    </select>
+                </div>
+
+                <button className={styles.feedbackButton} onClick={handleFeedback}>
+                    💬 Feedback
+                </button>
+
+                {showFeedback && (
+                    <div className={styles.feedbackToast}>
+                        ✓ Thank you for your feedback!
+                    </div>
+                )}
+
                 <div className={styles.status}>
                     <span className={styles.statusDot}></span>
                     <span className={styles.statusText}>Live</span>

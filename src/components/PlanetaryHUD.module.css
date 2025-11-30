@@ -164,6 +164,59 @@
 .alertText {
     font-size: 0.875rem;
     color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 0.5rem;
+}
+
+.alertCritical {
+    border-color: var(--error);
+    background: rgba(255, 51, 51, 0.05);
+}
+
+.alertCritical:hover {
+    border-color: var(--error);
+    background: rgba(255, 51, 51, 0.1);
+}
+
+.alertWarning {
+    border-color: var(--warning);
+    background: rgba(255, 184, 0, 0.05);
+}
+
+.alertWarning:hover {
+    border-color: var(--warning);
+    background: rgba(255, 184, 0, 0.1);
+}
+
+.alertSuccess {
+    border-color: var(--success);
+    background: rgba(0, 255, 157, 0.05);
+}
+
+.alertSuccess:hover {
+    border-color: var(--success);
+    background: rgba(0, 255, 157, 0.1);
+}
+
+.resourceAllocation {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--glass-border);
+}
+
+.resourceLabel {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.resourceValue {
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 /* Responsive */

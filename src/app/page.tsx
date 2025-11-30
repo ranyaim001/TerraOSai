@@ -6,6 +6,7 @@ import PlanetaryHUD from '@/components/PlanetaryHUD';
 import MyDividend from '@/components/MyDividend';
 import TheSimulation from '@/components/TheSimulation';
 import BioTwin from '@/components/BioTwin';
+import AIChat from '@/components/AIChat';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -32,6 +33,8 @@ export default function Home() {
                 Visualizing unseen connections. Gamifying global cooperation.
               </p>
             </div>
+
+            <AIChat />
 
             <div className={styles.grid}>
               <div className={`${styles.card} glass-panel`} onClick={() => setActiveTab('planetary-hud')}>
