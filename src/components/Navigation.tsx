@@ -10,6 +10,7 @@ const navItems = [
     { id: 'my-dividend', label: 'My Dividend', icon: '💰' },
     { id: 'the-simulation', label: 'The Simulation', icon: '🎮' },
     { id: 'bio-twin', label: 'Bio-Twin', icon: '🧬' },
+    { id: 'notes-ai', label: 'Notes AI', icon: '📝' },
     { id: 'knowledge-hub', label: 'Knowledge Hub', icon: '📚' },
 ];
 
