@@ -7,6 +7,7 @@ export default function NotesAI() {
     const [image, setImage] = useState<string | null>(null);
     const [text, setText] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
+    const [statusText, setStatusText] = useState('Processing...'); // This state will become unused after the change
     const [error, setError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
