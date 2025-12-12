@@ -12,7 +12,8 @@ export async function POST(request: Request) {
         }
 
         // Check for API key
-        if (!process.env.OPENAI_API_KEY) {
+        const apiKey = process.env.OPENAI_API_KEY?.trim();
+        if (!apiKey) {
             return NextResponse.json(
                 { error: 'OpenAI API key not configured' },
                 { status: 500 }
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+                'Authorization': `Bearer ${apiKey}`,
             },
             body: JSON.stringify({
                 model: 'gpt-4o-mini',
@@ -52,11 +53,23 @@ export async function POST(request: Request) {
 
         const data = await response.json();
 
-        if (data.error) {
-            console.error('OpenAI API Error:', data.error);
+        if (!response.ok) {
+            console.error('OpenAI API Error Status:', response.status);
+            console.error('OpenAI API Error Body:', JSON.stringify(data));
+
+            const errorMessage = data.error?.message || 'Failed to process image with OpenAI';
+
+            // Handle specific error cases
+            if (response.status === 401) {
+                return NextResponse.json(
+                    { error: 'Invalid API Key. Please check your OpenAI configuration.' },
+                    { status: 401 }
+                );
+            }
+
             return NextResponse.json(
-                { error: data.error.message || 'Failed to process image' },
-                { status: 500 }
+                { error: errorMessage },
+                { status: response.status }
             );
         }
 
@@ -69,7 +82,7 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Error in OCR route:', error);
         return NextResponse.json(
-            { error: 'Failed to process image' },
+            { error: 'Internal Server Error during processing' },
             { status: 500 }
         );
     }

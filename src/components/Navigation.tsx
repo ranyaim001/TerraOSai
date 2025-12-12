@@ -6,6 +6,8 @@ import styles from './Navigation.module.css';
 
 const navItems = [
     { id: 'home', label: 'Home', icon: '🏠' },
+    { id: 'learning-portal', label: 'Learning Portal', icon: '🎓' },
+    { id: 'imagination-zone', label: 'Imagination Zone', icon: '🎨' },
     { id: 'planetary-hud', label: 'Planetary HUD', icon: '🌍' },
     { id: 'my-dividend', label: 'My Dividend', icon: '💰' },
     { id: 'the-simulation', label: 'The Simulation', icon: '🎮' },

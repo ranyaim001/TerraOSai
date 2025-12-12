@@ -9,6 +9,9 @@ import BioTwin from '@/components/BioTwin';
 import AIChat from '@/components/AIChat';
 import KnowledgeHub from '@/components/KnowledgeHub';
 import NotesAI from '@/components/NotesAI';
+import CountriesView from '@/components/CountriesView';
+import LearningPortal from '@/components/LearningPortal';
+import ImaginationZone from '@/components/ImaginationZone';
 import styles from './page.module.css';
 
 export default function Home() {
@@ -28,6 +31,12 @@ export default function Home() {
         return <NotesAI />;
       case 'knowledge-hub':
         return <KnowledgeHub />;
+      case 'learning-portal':
+        return <LearningPortal />;
+      case 'imagination-zone':
+        return <ImaginationZone />;
+      case 'countries':
+        return <CountriesView onClose={() => setActiveTab('home')} />;
       default:
         return (
           <>
@@ -90,6 +99,22 @@ export default function Home() {
                   Curated resources for health, finance, and holistic wellness wisdom.
                 </p>
               </div>
+
+              <div className={`${styles.card} ${styles.featured} glass-panel`} onClick={() => setActiveTab('learning-portal')}>
+                <div className={styles.cardIcon}>🎓</div>
+                <h3 className={styles.cardTitle}>Learning Portal</h3>
+                <p className={styles.cardDescription}>
+                  Your personal gateway to cutting-edge research, books, and knowledge across all domains.
+                </p>
+              </div>
+
+              <div className={`${styles.card} ${styles.featured} glass-panel`} onClick={() => setActiveTab('imagination-zone')}>
+                <div className={styles.cardIcon}>🎨</div>
+                <h3 className={styles.cardTitle}>Imagination & Break Time</h3>
+                <p className={styles.cardDescription}>
+                  Relax, play games, solve riddles, and let your creativity flow with fun activities.
+                </p>
+              </div>
             </div>
 
             <div className={styles.stats}>
@@ -97,7 +122,7 @@ export default function Home() {
                 <div className={styles.statValue}>8.1B</div>
                 <div className={styles.statLabel}>Global Citizens</div>
               </div>
-              <div className={`${styles.stat} glass-panel`}>
+              <div className={`${styles.stat} glass-panel`} onClick={() => setActiveTab('countries')} style={{ cursor: 'pointer' }}>
                 <div className={styles.statValue}>195</div>
                 <div className={styles.statLabel}>Countries Connected</div>
               </div>
